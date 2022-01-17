@@ -12,11 +12,12 @@ import { StudentSearchDto } from './dto/student-search.dto ';
 @Injectable()
 export class StudentService {
   constructor(private httpService:HttpService) {}
- 
+
+  const url = `${process.env.BASE_URL}/Student`;
 
   public async findById(studentId: string)  {
-    const url = process.env.BASE_URL + '/Student/'+studentId
-    return this.httpService.get(url)
+    
+    return this.httpService.get(`${url}/${studentId}`)
     .pipe(
         map(response => {
           return new StudentDto(response.data) 
