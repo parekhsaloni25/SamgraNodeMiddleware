@@ -1,0 +1,31 @@
+export declare class StudentDto {
+    osid: string;
+    osUpdatedAt: string;
+    osCreatedAt: string;
+    osUpdatedBy: string;
+    osCreatedBy: string;
+    aadhaar: string;
+    refStudentId: string;
+    firstName: string;
+    lastName: string;
+    contactNumber: string;
+    email: string;
+    gender: string;
+    socialCategory: string;
+    iscwsn: string;
+    religion: string;
+    singleGirl: string;
+    weight: string;
+    height: string;
+    bloodGroup: string;
+    birthDate: string;
+    homeless: string;
+    bpl: string;
+    migrant: string;
+    schoolId: string;
+    classId: string;
+    status: string;
+    constructor(partial: Partial<StudentDto>);
+    get studentName(): string;
+    get studentId(): string;
+}
