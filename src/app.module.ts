@@ -4,11 +4,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { StudentModule } from './student/student.module';
 import { StudentService } from './student/student.service';
+import { TeacherModule } from './teacher/teacher.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    StudentModule],
+    StudentModule,
+    TeacherModule],
   controllers: [AppController],
   providers: [AppService],
 })
