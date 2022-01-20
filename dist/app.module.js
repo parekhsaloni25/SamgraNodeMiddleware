@@ -11,14 +11,19 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const attendance_module_1 = require("./Attendance/attendance.module");
+const configuration_module_1 = require("./configs/configuration.module");
+const holiday_module_1 = require("./holiday/holiday.module");
 const student_module_1 = require("./student/student.module");
+const teacher_module_1 = require("./teacher/teacher.module");
+const timetable_module_1 = require("./Timetable/timetable.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot(),
-            student_module_1.StudentModule
+            student_module_1.StudentModule, holiday_module_1.HolidayModule, configuration_module_1.ConfigurationModule, attendance_module_1.AttendanceModule, timetable_module_1.TimetableModule, teacher_module_1.TeacherModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

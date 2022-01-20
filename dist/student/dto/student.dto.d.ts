@@ -1,9 +1,5 @@
 export declare class StudentDto {
     osid: string;
-    osUpdatedAt: string;
-    osCreatedAt: string;
-    osUpdatedBy: string;
-    osCreatedBy: string;
     aadhaar: string;
     refStudentId: string;
     firstName: string;
@@ -25,7 +21,7 @@ export declare class StudentDto {
     schoolId: string;
     classId: string;
     status: string;
-    constructor(partial: Partial<StudentDto>);
-    get studentName(): string;
-    get studentId(): string;
+    studentId: string;
+    studentName: string;
+    constructor(partial: StudentDto);
 }

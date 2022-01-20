@@ -12,11 +12,11 @@ import { StudentSearchDto } from './dto/student-search.dto ';
 @Injectable()
 export class StudentService {
   constructor(private httpService:HttpService) {}
- 
+  
+  url = `${process.env.BASE_URL}/Student`;
 
   public async findById(studentId: string)  {
-    const url = process.env.BASE_URL + '/Student/'+studentId
-    return this.httpService.get(url)
+    return this.httpService.get(`${this.url}/${studentId}`)
     .pipe(
         map(response => {
           return new StudentDto(response.data) 
@@ -36,18 +36,17 @@ export class StudentService {
         'Content-Type': 'application/json', 
         // 'Authorization': `Basic ${encodeToken}`,
       };
-      const url = process.env.BASE_URL + '/Student'
-      return this.httpService.post(url,studentDto,{ headers: headersRequest })
+      return this.httpService.post(`${this.url}`,studentDto,{ headers: headersRequest })
       .pipe(
           map(response => {
             return new StudentResponseDto( {
-              studentId: response.data.result.student.osid,
+              studentId: response.data.result.Student.osid,
               responseMessage : "Student Saved Successfully",
               responseCode : response.data.responseCode
             })
         }),
           catchError(e => {
-            console.log(e.response.data)
+            console.log(e)
             var error = new ErrorResponse({
               errorCode : e.response.status,
               errorMessage : e.response.data.params.errmsg
@@ -63,12 +62,11 @@ export class StudentService {
       'Content-Type': 'application/json', 
       // 'Authorization': `Basic ${encodeToken}`,
     };
-    const url = process.env.BASE_URL + '/Student/'+studentId
-    return this.httpService.put(url,studentDto,{ headers: headersRequest })
+    return this.httpService.patch(`${this.url}/${studentId}`,studentDto,{ headers: headersRequest })
     .pipe(
         map(response => {
           return new StudentResponseDto( {
-            studentId: response.data.result.student.osid,
+            studentId: response.data.result.Student.osid,
             responseMessage : "Student Updated Successfully",
             responseCode : response.data.responseCode
           })
@@ -89,17 +87,17 @@ public async searchStudent(studentSearchDto: StudentSearchDto) {
     'Content-Type': 'application/json', 
     // 'Authorization': `Basic ${encodeToken}`,
   };
-  const url = process.env.BASE_URL + '/Student'
-  return this.httpService.post(url,studentSearchDto,{ headers: headersRequest })
+  return this.httpService.post(`${this.url}/search`,studentSearchDto,{ headers: headersRequest })
   .pipe(
       map(response => {
-        response.data.ForEach(item =>{
-            item = new StudentDto(item)
+        return response.data.map(item =>{
+            return new StudentDto(item)
+            
         });
-        return response.data
+       
     }),
       catchError(e => {
-        console.log(e.response.data)
+        console.log(e)
         var error = new ErrorResponse({
           errorCode : e.response.status,
           errorMessage : e.response.data.params.errmsg
@@ -107,6 +105,8 @@ public async searchStudent(studentSearchDto: StudentSearchDto) {
         throw new HttpException(error, e.response.status);
       })
   );
+
+ 
 }
 
 public async findStudentByClass(searchClassId: String) {
@@ -122,22 +122,21 @@ public async findStudentByClass(searchClassId: String) {
   var studentSearchDto = new StudentSearchDto({
     filters : searchFilter
   })
-  const url = process.env.BASE_URL + '/Student'
-  return this.httpService.post(url,studentSearchDto,{ headers: headersRequest })
+
+  return this.httpService.post(`${this.url}/search`,studentSearchDto,{ headers: headersRequest })
   .pipe(
       map(response => {
-        response.data.ForEach(item =>{
-            item = new StudentDto(item)
-        });
-        return response.data
+        return response.data.map(item =>{
+          return new StudentDto(item)
+      });
     }),
       catchError(e => {
-        console.log(e.response.data)
+        console.log(e)
         var error = new ErrorResponse({
           errorCode : e.response.status,
           errorMessage : e.response.data.params.errmsg
         })
-        throw new HttpException(error, e.response.status);
+        throw new HttpException(e.response.data, e.response.status);
       })
   );
 }

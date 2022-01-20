@@ -12,6 +12,9 @@ import {
   UseInterceptors,
   Post,
   Query,
+  SerializeOptions,
+  UsePipes,
+  ValidationPipe,
 } from "@nestjs/common";
 import { StudentSearchDto } from "./dto/student-search.dto ";
 import { StudentDto } from "./dto/student.dto";
@@ -23,34 +26,42 @@ export class StudentController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get("/:id")
+  @SerializeOptions({
+    strategy: 'excludeAll'
+  })
   public async getStudentById(@Param("id") studentId: string )  {
     return this.studentService.findById(studentId);
   }
 
   @Post()
+  @UseInterceptors(ClassSerializerInterceptor)
   public async createStudent(@Body() studentDto: StudentDto )  {
     return this.studentService.createStudent(studentDto);
   }
 
   @Put("/:id")
+  @UseInterceptors(ClassSerializerInterceptor)
   public async updateStudent(@Param("id") studentId: string, @Body() studentDto: StudentDto )  {
     return this.studentService.updateStudent(studentId,studentDto);
   }
 
   @Post("/search")
+  @UseInterceptors(ClassSerializerInterceptor)
+  @SerializeOptions({
+    strategy: 'excludeAll'
+  })
   public async searchStudent(@Body() studentSearchDto: StudentSearchDto )  {
-    return this.studentService.searchStudent(studentSearchDto);
+   return this.studentService.searchStudent(studentSearchDto);
+
   }
 
-  @Get("/findByClass?")
-  public async findStudentByClass(@Query("classId") classId: string )  {
-    return this.studentService.findStudentByClass(classId);
+  @Post("/findByClass")
+  @UseInterceptors(ClassSerializerInterceptor)
+  @SerializeOptions({
+    strategy: 'excludeAll'
+  })
+  public async findStudentByClass(@Query('classId') classId : String)  {
+    return this.studentService.findStudentByClass(''+classId);
   } 
-
-  // @Get("/findByClassAndSubject")
-  // public async findStudentByClassAndSubject(@Query("classId") classId: string,
-  // @Query("classId") subjectId: string)  {
-  //   return this.studentService.findStudentByClassAndSubject(classId,subjectId);
-  // } 
  
 }
