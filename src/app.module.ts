@@ -10,11 +10,11 @@ import { StudentModule } from './student/student.module';
 import { StudentService } from './student/student.service';
 import { TeacherModule } from './teacher/teacher.module';
 import { TimetableModule } from './Timetable/timetable.module';
-import { configService } from './configs/config.service';
+import { dbConfigService } from './configs/config.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
+    TypeOrmModule.forRoot(dbConfigService.getTypeOrmConfig()),
     ConfigModule.forRoot(),
     StudentModule,HolidayModule,ConfigurationModule,AttendanceModule,TimetableModule,TeacherModule],
   controllers: [AppController],

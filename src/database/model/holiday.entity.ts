@@ -2,7 +2,7 @@ import { Entity, Column } from 'typeorm';
 import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'holiday' })
-export class Item extends BaseEntity {
+export class Holiday extends BaseEntity {
 
     @Column({ type: 'timestamptz' })
     date: Date;

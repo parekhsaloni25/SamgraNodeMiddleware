@@ -213,7 +213,7 @@ public async findAll() {
 
 }
 
-class ConfigService2 {
+class DbConfigService {
 
   constructor(private env: { [k: string]: string | undefined }) { }
 
@@ -266,7 +266,7 @@ class ConfigService2 {
 
 }
 
-const configService = new ConfigService2(process.env)
+const dbConfigService = new DbConfigService(process.env)
   .ensureValues([
     'POSTGRES_HOST',
     'POSTGRES_PORT',
@@ -275,4 +275,4 @@ const configService = new ConfigService2(process.env)
     'POSTGRES_DATABASE'
   ]);
 
-export { configService };
+export { dbConfigService };
