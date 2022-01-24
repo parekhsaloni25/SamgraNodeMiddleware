@@ -5,7 +5,7 @@ import {HttpService} from '@nestjs/axios'
 import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { StudentDto} from './dto/student.dto';
-import { ErrorResponse } from 'src/error-response';
+import { ErrorResponse } from './../error-response';
 import { StudentResponseDto } from './dto/student-response.dto';
 import { StudentSearchDto } from './dto/student-search.dto ';
 

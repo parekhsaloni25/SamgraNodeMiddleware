@@ -5,9 +5,9 @@ import {HttpService} from '@nestjs/axios'
 import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { AttendanceDto} from './dto/attendance.dto';
-import { ErrorResponse } from 'src/error-response';
 import { AttendanceResponseDto } from './dto/attendance-response.dto';
 import { AttendanceSearchDto } from './dto/attendance-search.dto ';
+import { ErrorResponse } from './../error-response';
 
 @Injectable()
 export class AttendanceService {

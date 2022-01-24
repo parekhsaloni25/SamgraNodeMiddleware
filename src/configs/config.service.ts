@@ -5,9 +5,12 @@ import {HttpService} from '@nestjs/axios'
 import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { ConfigDto} from './dto/config.dto';
-import { ErrorResponse } from 'src/error-response';
+import { ErrorResponse } from './../error-response';
 import { ConfigResponseDto } from './dto/config-response.dto';
 import { ConfigSearchDto } from './dto/config-search.dto ';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+
+require('dotenv').config();
 
 @Injectable()
 export class ConfigService {
@@ -210,4 +213,66 @@ public async findAll() {
 
 }
 
+class DbConfigService {
 
+  constructor(private env: { [k: string]: string | undefined }) { }
+
+  private getValue(key: string, throwOnMissing = true): string {
+    const value = this.env[key];
+    if (!value && throwOnMissing) {
+      throw new Error(`config error - missing env.${key}`);
+    }
+
+    return value;
+  }
+
+  public ensureValues(keys: string[]) {
+    keys.forEach(k => this.getValue(k, true));
+    return this;
+  }
+
+  public getPort() {
+    return this.getValue('PORT', true);
+  }
+
+  public isProduction() {
+    const mode = this.getValue('MODE', false);
+    return mode != 'DEV';
+  }
+
+  public getTypeOrmConfig(): TypeOrmModuleOptions {
+    return {
+      type: 'postgres',
+
+      host: this.getValue('POSTGRES_HOST'),
+      port: parseInt(this.getValue('POSTGRES_PORT')),
+      username: this.getValue('POSTGRES_USER'),
+      password: this.getValue('POSTGRES_PASSWORD'),
+      database: this.getValue('POSTGRES_DATABASE'),
+
+      entities: ['**/*.entity{.ts,.js}'],
+
+      migrationsTableName: 'migration',
+
+      migrations: ['src/migration/*.ts'],
+
+      cli: {
+        migrationsDir: 'src/migration',
+      },
+
+      ssl: this.isProduction(),
+    };
+  }
+
+}
+
+const dbConfigService = new DbConfigService(process.env)
+  .ensureValues([
+    'POSTGRES_HOST',
+    'POSTGRES_PORT',
+    'POSTGRES_USER',
+    'POSTGRES_PASSWORD',
+    'POSTGRES_DATABASE'
+  ]);
+
+export { dbConfigService };

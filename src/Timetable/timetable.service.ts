@@ -5,7 +5,7 @@ import {HttpService} from '@nestjs/axios'
 import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { TimetableDto} from './dto/timetable.dto';
-import { ErrorResponse } from 'src/error-response';
+import { ErrorResponse } from './../error-response';
 import { TimetableResponseDto } from './dto/timetable-response.dto';
 import { TimetableSearchDto } from './dto/timetable-search.dto ';
 
