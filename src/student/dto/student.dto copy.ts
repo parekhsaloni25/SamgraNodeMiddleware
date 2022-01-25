@@ -1,7 +1,7 @@
 import { Exclude, Expose } from 'class-transformer';
 import { MaxLength, IsNotEmpty, IsEmail, IsString, IsNumber } from 'class-validator';
 
-export class StudentDto {
+export class StudentCopyDto {
   
   @Exclude()
   osid : string 
@@ -19,10 +19,10 @@ export class StudentDto {
   @Expose()
   lastName: string;
   
-  @IsNumber()
+  @Expose()
   contactNumber: string;
   
-  @IsEmail()
+  @Expose()
   email: string;
   
   @Expose()
@@ -77,9 +77,9 @@ export class StudentDto {
   studentName : string;
 
 
-  constructor(obj: StudentDto) {
-    Object.keys(obj).forEach(key => obj[key] === '' ? delete obj[key] : {});
-    Object.assign(this, obj);
+  constructor(partial: StudentCopyDto) {
+    Object.assign({},this.contactNumber === '' ? null : this.contactNumber);
+  
   }
 
   

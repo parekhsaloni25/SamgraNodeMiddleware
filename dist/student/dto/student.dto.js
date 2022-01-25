@@ -13,31 +13,9 @@ exports.StudentDto = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class StudentDto {
-    constructor(partial) {
-        Object.assign(this, partial);
-        this.studentId = `${this.osid}`;
-        this.studentName = `${this.firstName} ${this.lastName}`;
-        this.aadhaar = `${this.aadhaar}` == null || undefined || 'undefined' ? "" : `${this.aadhaar}`;
-        this.refStudentId = `${this.refStudentId}` == null || undefined || 'undefined' ? "" : `${this.refStudentId}`;
-        this.firstName = `${this.firstName}` == null || undefined || 'undefined' ? "" : `${this.firstName}`;
-        this.lastName = `${this.lastName}` == null || undefined || 'undefined' ? "" : `${this.lastName}`;
-        this.contactNumber = `${this.contactNumber}` == null || undefined || 'undefined' ? "" : `${this.contactNumber}`;
-        this.email = `${this.email}` == null || undefined || 'undefined' ? "" : `${this.email}`;
-        this.gender = `${this.gender}` == null || undefined || 'undefined' ? "" : `${this.gender}`;
-        this.socialCategory = `${this.socialCategory}` == null || undefined || 'undefined' ? "" : `${this.socialCategory}`;
-        this.iscwsn = `${this.iscwsn}` == null || undefined || 'undefined' ? "" : `${this.iscwsn}`;
-        this.religion = `${this.religion}` == null || undefined || 'undefined' ? "" : `${this.religion}`;
-        this.singleGirl = `${this.singleGirl}` == null || undefined || 'undefined' ? "" : `${this.singleGirl}`;
-        this.weight = `${this.weight}` == null || undefined || 'undefined' ? "" : `${this.weight}`;
-        this.height = `${this.height}` == null || undefined || 'undefined' ? "" : `${this.height}`;
-        this.bloodGroup = `${this.bloodGroup}` == null || undefined || 'undefined' ? "" : `${this.bloodGroup}`;
-        this.birthDate = `${this.birthDate}` == null || undefined || 'undefined' ? "" : `${this.birthDate}`;
-        this.homeless = `${this.homeless}` == null || undefined || 'undefined' ? "" : `${this.homeless}`;
-        this.bpl = `${this.bpl}` == null || undefined || 'undefined' ? "" : `${this.bpl}`;
-        this.schoolId = `${this.schoolId}` == null || undefined || 'undefined' ? "" : `${this.schoolId}`;
-        this.classId = `${this.classId}` == null || undefined || 'undefined' ? "" : `${this.classId}`;
-        this.status = `${this.status}` == null || undefined || 'undefined' ? "" : `${this.status}`;
-        this.migrant = `${this.migrant}` == null || undefined || 'undefined' ? "" : `${this.migrant}`;
+    constructor(obj) {
+        Object.keys(obj).forEach(key => obj[key] === '' ? delete obj[key] : {});
+        Object.assign(this, obj);
     }
 }
 __decorate([
