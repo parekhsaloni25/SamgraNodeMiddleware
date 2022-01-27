@@ -1,4 +1,4 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, Patch, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { GroupDto } from './dto/group.dto';
 import { GroupService } from './group.service';
 
@@ -7,34 +7,43 @@ export class GroupController {
 
     constructor(private readonly groupService: GroupService) {}
 
+    @Post()
+    async create(@Body() createGroupDto: GroupDto) {
+        const result = await this.groupService.createGroup(createGroupDto);
+        if (!result)
+        throw new HttpException('Error adding new group', HttpStatus.BAD_REQUEST);
+      return result;
+    }
+
     @Get()
-    getGroups() {
-        return 'the groups'
+    async get() {
+        const result = await this.groupService.getGroup();
+        if (!result)
+        throw new HttpException('Error finding groups', HttpStatus.BAD_REQUEST);
+      return result;
+    }
+
+    @Get(':id')
+    async findOne(@Param('id') id: string) {
+        const result = await this.groupService.findGroupById(id);
+        if (!result)
+        throw new HttpException('Error finding group by its id', HttpStatus.BAD_REQUEST);
+      return result;
     }
     
-    @Post()
-    @UseInterceptors(ClassSerializerInterceptor)
-    create(@Body() createUserDto: GroupDto) {
-        return this.groupService.createGroup(createUserDto);
+    @Put(':id')
+    async update(@Param('id') id: string, @Body() updateGroupDto: GroupDto) {
+        const result = await this.groupService.updateGroup(id, updateGroupDto);
+        if (!result)
+        throw new HttpException('Error updating group', HttpStatus.BAD_REQUEST);
+      return result;
     }
-
-    // @Get()
-    // findAll() {
-    //     return this.groupService.findAll();
-    // }
-
-    // @Get(':id')
-    // findOne(@Param('id') id: string) {
-    //     return this.groupService.findOne(+id);
-    // }
-
-    // @Patch(':id')
-    // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    //     return this.groupService.update(+id, updateUserDto);
-    // }
-
-    // @Delete(':id')
-    // remove(@Param('id') id: string) {
-    //     return this.groupService.remove(+id);
-    // }
+    
+    @Delete(':id')
+    async delete(@Param('id') id: string) {
+        const result = await this.groupService.deleteGroup(id);
+        if (!result)
+        throw new HttpException('Error deleting group', HttpStatus.BAD_REQUEST);
+      return result;
+    }
 }

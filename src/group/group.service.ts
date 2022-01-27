@@ -1,39 +1,39 @@
-import { HttpService } from '@nestjs/axios';
-import { HttpException, Injectable } from '@nestjs/common';
-import { catchError, map } from 'rxjs/operators';
-import { ErrorResponse } from './../error-response';
-import { GroupResponseDto } from './dto/group-response.dto';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { getManager, Repository } from 'typeorm';
 import { GroupDto } from './dto/group.dto';
+import { Group } from './group.entity';
 
 @Injectable()
 export class GroupService {
+    [x: string]: any;
 
-    constructor(private httpService:HttpService) {}
-  
-    url = `${process.env.BASE_URL}/Group`;
-  
+  private entityManager = getManager();
 
-    public async createGroup(groupDto: GroupDto) {
-        const headersRequest  = {
-          'Content-Type': 'application/json', 
-        };
-          return this.httpService.post(`${this.url}`,groupDto,{ headers: headersRequest })
-          .pipe(
-              map(response => {
-                return new GroupResponseDto( {
-                  groupId: response.data.result.group.osid,
-                  responseMessage : "Group Saved Successfully",
-                  responseCode : response.data.responseCode
-                })
-            }),
-              catchError(e => {
-                console.log(e.response.data)
-                var error = new ErrorResponse({
-                  errorCode : e.response.status,
-                  errorMessage : e.response.data.params.errmsg
-                })
-                throw new HttpException(error, e.response.status);
-              })
-          );
-      }0
+  constructor(
+    @InjectRepository(Group)
+    private readonly groupRepository: Repository<Group>
+  ) {}
+  
+  public async createGroup(groupDto: GroupDto): Promise<Group>  {
+    return await this.groupRepository.save(groupDto);
+  }
+
+  public async getGroup(): Promise<Group[]>  {
+    return await this.groupRepository.find();
+  }
+
+  public async findGroupById(groupId:string): Promise<Group>  {
+    return await this.groupRepository.findOne(groupId);
+  }
+
+  public async updateGroup(groupId:string, updateGroupDto:GroupDto): Promise<string>  {
+    const a = await this.groupRepository.update(groupId, updateGroupDto);
+    return 'group is updated successfully.';
+  }
+
+  public async deleteGroup(groupId:string): Promise<string>  {
+    const grpDeleted = await this.groupRepository.delete(groupId);
+    return 'group is deleted successfully.';
+  }
 }
