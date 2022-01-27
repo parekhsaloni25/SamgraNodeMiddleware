@@ -14,9 +14,9 @@ const common_1 = require("@nestjs/common");
 const operators_1 = require("rxjs/operators");
 const axios_1 = require("@nestjs/axios");
 const attendance_dto_1 = require("./dto/attendance.dto");
-const error_response_1 = require("../error-response");
 const attendance_response_dto_1 = require("./dto/attendance-response.dto");
 const attendance_search_dto_1 = require("./dto/attendance-search.dto ");
+const error_response_1 = require("./../error-response");
 let AttendanceService = class AttendanceService {
     constructor(httpService) {
         this.httpService = httpService;

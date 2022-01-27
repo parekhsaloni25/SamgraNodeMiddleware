@@ -9,7 +9,7 @@ export declare class StudentService {
     url: string;
     findById(studentId: string): Promise<Observable<StudentDto>>;
     createStudent(studentDto: StudentDto): Promise<Observable<StudentResponseDto>>;
-    updateStudent(studentId: string, studentDto: StudentDto): Promise<Observable<StudentResponseDto>>;
+    updateStudent(studentId: string, studentDto: StudentDto): Promise<Observable<StudentDto>>;
     searchStudent(studentSearchDto: StudentSearchDto): Promise<Observable<any>>;
     findStudentByClass(searchClassId: String): Promise<Observable<any>>;
 }

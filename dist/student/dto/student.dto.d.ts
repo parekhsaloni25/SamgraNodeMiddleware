@@ -23,5 +23,5 @@ export declare class StudentDto {
     status: string;
     studentId: string;
     studentName: string;
-    constructor(partial: StudentDto);
+    constructor(obj: StudentDto);
 }

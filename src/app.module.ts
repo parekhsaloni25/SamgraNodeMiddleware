@@ -12,12 +12,13 @@ import { TeacherModule } from './teacher/teacher.module';
 import { TimetableModule } from './Timetable/timetable.module';
 import { dbConfigService } from './configs/config.service';
 import { GroupModule } from './group/group.module';
+import { SchoolModule } from './school/school.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dbConfigService.getTypeOrmConfig()),
     ConfigModule.forRoot(),
-    StudentModule,HolidayModule,ConfigurationModule,AttendanceModule,TimetableModule,TeacherModule, GroupModule],
+    StudentModule,HolidayModule,ConfigurationModule,AttendanceModule,TimetableModule,TeacherModule, GroupModule, SchoolModule],
   controllers: [AppController],
   providers: [AppService],
 })
