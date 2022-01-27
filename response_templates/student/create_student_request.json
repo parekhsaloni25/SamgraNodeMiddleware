@@ -4,7 +4,7 @@
     "firstName":"{{firstName}}",
     "lastName":"{{lastName}}",
     "contactNumber":"{{contactNumber}}",
-    "email":"{{#email}} {{email}} {{/email}}",
+    "email":"{{email}}",
     "gender":"{{gender}}",
     "socialCategory":"{{socialCategory}}",
     "iscwsn":"{{iscwsn}}",

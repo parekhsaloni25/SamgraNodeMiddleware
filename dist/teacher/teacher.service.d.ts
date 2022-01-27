@@ -9,7 +9,7 @@ export declare class TeacherService {
     url: string;
     findById(teacherId: string): Promise<Observable<TeacherDto>>;
     createTeacher(teacherDto: TeacherDto): Promise<Observable<TeacherResponseDto>>;
-    updateTeacher(teacherId: string, teacherDto: TeacherDto): Promise<Observable<TeacherResponseDto>>;
+    updateTeacher(teacherId: string, teacherDto: TeacherDto): Promise<Observable<TeacherDto>>;
     searchTeacher(teacherSearchDto: TeacherSearchDto): Promise<Observable<any>>;
-    findTeacherBySubject(subjectId: String): Promise<Observable<any>>;
+    findTeacherBySubject(searchSubjectId: String): Promise<Observable<any>>;
 }

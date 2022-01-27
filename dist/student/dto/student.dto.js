@@ -14,7 +14,6 @@ const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class StudentDto {
     constructor(obj) {
-        Object.keys(obj).forEach(key => obj[key] === '' ? delete obj[key] : {});
         Object.assign(this, obj);
     }
 }

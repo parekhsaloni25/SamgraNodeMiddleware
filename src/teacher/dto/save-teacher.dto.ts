@@ -1,17 +1,11 @@
 import { Exclude, Expose } from 'class-transformer';
 import { MaxLength, IsNotEmpty, IsEmail, IsString, IsNumber } from 'class-validator';
 
-export class StudentDto {
-  
-  @Exclude()
-  osid : string 
-  
-  @MaxLength(16)
+export class SaveTeacherDto {
+   
+    
   @Expose()
-  aadhaar: string;
-  
-  @Expose()
-  refStudentId: string;
+  refTeacherId: string;
   
   @Expose()
   firstName: string;
@@ -30,56 +24,69 @@ export class StudentDto {
   
   @Expose()
   socialCategory: string;
+
+  @Expose()
+  birthDate: string;
   
   @Expose()
-  iscwsn: string;
+  designation: string;
   
   @Expose()
-  religion: string;
+  cadre: string;
   
   @Expose()
-  singleGirl: string;
+  profQualification: string;
   
   @Expose()
-  weight: string;
+  joiningDate: string;
   
   @Expose()
-  height: string;
+  subjectId: string;
   
   @Expose()
   bloodGroup: string;
   
   @Expose()
-  birthDate: string;
+  maritalStatus: string;
   
   @Expose()
-  homeless: string;
+  blockId: string;
   
   @Expose()
-  bpl: string;
+  address: string;
   
   @Expose()
-  migrant: string;
+  compSkills: string;
   
   @Expose()
   schoolId: string;
   
   @Expose()
-  classId: string;
+  disability: string;
   
   @Expose()
-  status: string;
+  religion: string;
 
   @Expose()
-  studentId : string;
+  homeDistance : string;
 
   @Expose()
-  studentName : string;
+  roles : string;
+
+  @Expose()
+  acrId : string;
+
+  @Expose()
+  retirementDate : string;
+
+  @Expose()
+  workingStatus : string;
 
 
-  constructor(obj: StudentDto) {
-    // Object.keys(obj).forEach(key => obj[key] === '' ? delete obj[key] : {});
+  constructor(obj: SaveTeacherDto) {
+    Object.keys(obj).forEach(key => obj[key] === '' ? delete obj[key] : {});
     Object.assign(this, obj);
+   
   }
 
   

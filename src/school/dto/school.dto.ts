@@ -1,83 +1,79 @@
 import { Exclude, Expose } from 'class-transformer';
 import { MaxLength, IsNotEmpty, IsEmail, IsString, IsNumber } from 'class-validator';
 
-export class StudentDto {
+export class SchoolDto {
   
   @Exclude()
   osid : string 
-  
-  @MaxLength(16)
-  @Expose()
-  aadhaar: string;
-  
-  @Expose()
-  refStudentId: string;
-  
-  @Expose()
-  firstName: string;
-  
-  @Expose()
-  lastName: string;
-  
-  @IsNumber()
-  contactNumber: string;
-  
-  @IsEmail()
-  email: string;
-  
-  @Expose()
-  gender: string;
-  
-  @Expose()
-  socialCategory: string;
-  
-  @Expose()
-  iscwsn: string;
-  
-  @Expose()
-  religion: string;
-  
-  @Expose()
-  singleGirl: string;
-  
-  @Expose()
-  weight: string;
-  
-  @Expose()
-  height: string;
-  
-  @Expose()
-  bloodGroup: string;
-  
-  @Expose()
-  birthDate: string;
-  
-  @Expose()
-  homeless: string;
-  
-  @Expose()
-  bpl: string;
-  
-  @Expose()
-  migrant: string;
   
   @Expose()
   schoolId: string;
   
   @Expose()
-  classId: string;
+  refSchoolId: string;
+  
+  @Expose()
+  regulatorName: string;
+  
+  @Expose()
+  name: string;
+  
+  @Expose()
+  schoolCategory: string;
+  
+  @Expose()
+  locationType: string;
+  
+  @Expose()
+  districtId: string;
+  
+  @Expose()
+  blockId: string;
+  
+  @Expose()
+  clusterId: string;
+  
+  @Expose()
+  villageId: string;
+  
+  @Expose()
+  pincode: string;
+  
+  @Expose()
+  assemblyConst: string;
+  
+  @Expose()
+  parlConst: string;
+  
+  @Expose()
+  gpsPoints: string;
+  
+  @Expose()
+  startYear: string;
+  
+  @Expose()
+  teacherId: string;
+  
+  @Expose()
+  instMedium: string;
+  
+  @Expose()
+  upgradeYear: string;
+  
+  @Expose()
+  resIdenceType: string;
   
   @Expose()
   status: string;
 
   @Expose()
-  studentId : string;
-
+  shiftId : string;
+  
   @Expose()
-  studentName : string;
+  sessionId:string
 
 
-  constructor(obj: StudentDto) {
+  constructor(obj: SchoolDto) {
     // Object.keys(obj).forEach(key => obj[key] === '' ? delete obj[key] : {});
     Object.assign(this, obj);
   }

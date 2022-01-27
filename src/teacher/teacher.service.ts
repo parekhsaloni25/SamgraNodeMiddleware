@@ -9,44 +9,50 @@ import { ErrorResponse } from './../error-response';
 import { TeacherResponseDto } from './dto/teacher-response.dto';
 import { TeacherSearchDto } from './dto/teacher-search.dto ';
 
+import Mustache = require("mustache");
+import { SaveTeacherDto } from './dto/save-teacher.dto';
+
 @Injectable()
 export class TeacherService {
   constructor(private httpService:HttpService) {}
   
   url = `${process.env.BASE_URL}/Teacher`;
-
+  
   public async findById(teacherId: string)  {
+    var template = require('./../../response_templates/teacher/find_teacher_response.json');
     return this.httpService.get(`${this.url}/${teacherId}`)
     .pipe(
         map(response => {
-          return new TeacherDto(response.data) 
+         var output = Mustache.render(JSON.stringify(template), response.data);
+         return new TeacherDto(JSON.parse(output))
       }),
         catchError(e => {
           var error = new ErrorResponse({
-            errorCode : e.response.status,
-            errorMessage : e.response.data.params.errmsg
+            errorCode : e.response?.status,
+            errorMessage : e.response?.data?.params?.errmsg
           })
           throw new HttpException(error, e.response.status);
         })
     );
   }
 
+ 
+
   public async createTeacher(teacherDto: TeacherDto) {
+      var responseTemplate = require('./../../response_templates/teacher/create_teacher_response.json');
+      var requestTemplate = require('./../../response_templates/teacher/create_teacher_request.json');
+      var input = Mustache.render(JSON.stringify(requestTemplate), teacherDto);
       const headersRequest = {
         'Content-Type': 'application/json', 
         // 'Authorization': `Basic ${encodeToken}`,
       };
-      return this.httpService.post(`${this.url}`,teacherDto,{ headers: headersRequest })
+      return this.httpService.post(`${this.url}`,new SaveTeacherDto(JSON.parse(input)),{ headers: headersRequest })
       .pipe(
           map(response => {
-            return new TeacherResponseDto( {
-              teacherId: response.data.result.teacher.osid,
-              responseMessage : "Teacher Saved Successfully",
-              responseCode : response.data.responseCode
-            })
+          var output = Mustache.render(JSON.stringify(responseTemplate), response.data);
+          return new TeacherResponseDto(JSON.parse(output))
         }),
           catchError(e => {
-            console.log(e.response.data)
             var error = new ErrorResponse({
               errorCode : e.response.status,
               errorMessage : e.response.data.params.errmsg
@@ -58,21 +64,20 @@ export class TeacherService {
 
 
   public async updateTeacher(teacherId:string,teacherDto: TeacherDto) {
+    var responseTemplate = require('./../../response_templates/teacher/create_teacher_response.json');
+    var requestTemplate = require('./../../response_templates/teacher/create_teacher_request.json');
+    var input = Mustache.render(JSON.stringify(requestTemplate), teacherDto);
     const headersRequest = {
       'Content-Type': 'application/json', 
       // 'Authorization': `Basic ${encodeToken}`,
     };
-    return this.httpService.put(`${this.url}/${teacherId}`,teacherDto,{ headers: headersRequest })
+    return this.httpService.patch(`${this.url}/${teacherId}`,new SaveTeacherDto(JSON.parse(input)),{ headers: headersRequest })
     .pipe(
         map(response => {
-          return new TeacherResponseDto( {
-            teacherId: response.data.result.teacher.osid,
-            responseMessage : "Teacher Updated Successfully",
-            responseCode : response.data.responseCode
-          })
+          var output = Mustache.render(JSON.stringify(responseTemplate), response.data);
+          return new TeacherDto(JSON.parse(output))
       }),
         catchError(e => {
-          console.log(e.response.data)
           var error = new ErrorResponse({
             errorCode : e.response.status,
             errorMessage : e.response.data.params.errmsg
@@ -83,6 +88,7 @@ export class TeacherService {
 }
 
 public async searchTeacher(teacherSearchDto: TeacherSearchDto) {
+  var template = require('./../../response_templates/teacher/find_teacher_response.json');
   const headersRequest = {
     'Content-Type': 'application/json', 
     // 'Authorization': `Basic ${encodeToken}`,
@@ -91,13 +97,12 @@ public async searchTeacher(teacherSearchDto: TeacherSearchDto) {
   .pipe(
       map(response => {
         return response.data.map(item =>{
-            return new TeacherDto(item)
-            
+          var output = Mustache.render(JSON.stringify(template), item);
+          return new TeacherDto(JSON.parse(output))    
         });
        
     }),
       catchError(e => {
-        console.log(e)
         var error = new ErrorResponse({
           errorCode : e.response.status,
           errorMessage : e.response.data.params.errmsg
@@ -109,27 +114,28 @@ public async searchTeacher(teacherSearchDto: TeacherSearchDto) {
  
 }
 
-public async findTeacherBySubject(subjectId: String) {
+public async findTeacherBySubject(searchSubjectId: String) {
+  var template = require('./../../response_templates/teacher/find_teacher_response.json');
+
   const headersRequest = {
     'Content-Type': 'application/json', 
   };
 
   var searchFilter = {
     subjectId : {
-     "eq" : subjectId
+     "eq" : searchSubjectId
     }
   }
   var teacherSearchDto = new TeacherSearchDto({
     filters : searchFilter
   })
 
-  console.log(teacherSearchDto)
   return this.httpService.post(`${this.url}/search`,teacherSearchDto,{ headers: headersRequest })
   .pipe(
       map(response => {
         return response.data.map(item =>{
-          return new TeacherDto(item)
-          
+          var output = Mustache.render(JSON.stringify(template), item);
+          return new TeacherDto(JSON.parse(output))   
       });
     }),
       catchError(e => {
