@@ -50,3 +50,6 @@ ormconfig.json
 
 # Mock API
 /api/node_modules
+
+# Migration folder
+/src/Migration
