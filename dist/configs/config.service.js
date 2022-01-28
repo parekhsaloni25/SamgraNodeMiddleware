@@ -9,14 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ConfigService = void 0;
+exports.dbConfigService = exports.ConfigService = void 0;
 const common_1 = require("@nestjs/common");
 const operators_1 = require("rxjs/operators");
 const axios_1 = require("@nestjs/axios");
 const config_dto_1 = require("./dto/config.dto");
-const error_response_1 = require("../error-response");
+const error_response_1 = require("./../error-response");
 const config_response_dto_1 = require("./dto/config-response.dto");
 const config_search_dto_1 = require("./dto/config-search.dto ");
+require('dotenv').config();
 let ConfigService = class ConfigService {
     constructor(httpService) {
         this.httpService = httpService;
@@ -172,4 +173,53 @@ ConfigService = __decorate([
     __metadata("design:paramtypes", [axios_1.HttpService])
 ], ConfigService);
 exports.ConfigService = ConfigService;
+class DbConfigService {
+    constructor(env) {
+        this.env = env;
+    }
+    getValue(key, throwOnMissing = true) {
+        const value = this.env[key];
+        if (!value && throwOnMissing) {
+            throw new Error(`config error - missing env.${key}`);
+        }
+        return value;
+    }
+    ensureValues(keys) {
+        keys.forEach(k => this.getValue(k, true));
+        return this;
+    }
+    getPort() {
+        return this.getValue('PORT', true);
+    }
+    isProduction() {
+        const mode = this.getValue('MODE', false);
+        return mode != 'DEV';
+    }
+    getTypeOrmConfig() {
+        return {
+            type: 'postgres',
+            host: this.getValue('POSTGRES_HOST'),
+            port: parseInt(this.getValue('POSTGRES_PORT')),
+            username: this.getValue('POSTGRES_USER'),
+            password: this.getValue('POSTGRES_PASSWORD'),
+            database: this.getValue('POSTGRES_DATABASE'),
+            entities: ['**/*.entity{.ts,.js}'],
+            migrationsTableName: 'migration',
+            migrations: ['src/migration/*.ts'],
+            cli: {
+                migrationsDir: 'src/migration',
+            },
+            ssl: this.isProduction(),
+        };
+    }
+}
+const dbConfigService = new DbConfigService(process.env)
+    .ensureValues([
+    'POSTGRES_HOST',
+    'POSTGRES_PORT',
+    'POSTGRES_USER',
+    'POSTGRES_PASSWORD',
+    'POSTGRES_DATABASE'
+]);
+exports.dbConfigService = dbConfigService;
 //# sourceMappingURL=config.service.js.map

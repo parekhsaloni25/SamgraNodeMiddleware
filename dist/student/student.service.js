@@ -14,39 +14,43 @@ const common_1 = require("@nestjs/common");
 const operators_1 = require("rxjs/operators");
 const axios_1 = require("@nestjs/axios");
 const student_dto_1 = require("./dto/student.dto");
-const error_response_1 = require("../error-response");
+const error_response_1 = require("./../error-response");
 const student_response_dto_1 = require("./dto/student-response.dto");
 const student_search_dto_1 = require("./dto/student-search.dto ");
+const Mustache = require("mustache");
+const save_student_dto_1 = require("./dto/save-student.dto");
 let StudentService = class StudentService {
     constructor(httpService) {
         this.httpService = httpService;
         this.url = `${process.env.BASE_URL}/Student`;
     }
     async findById(studentId) {
+        var template = require('./../../response_templates/student/find_student_response.json');
         return this.httpService.get(`${this.url}/${studentId}`)
             .pipe((0, operators_1.map)(response => {
-            return new student_dto_1.StudentDto(response.data);
+            var output = Mustache.render(JSON.stringify(template), response.data);
+            return new student_dto_1.StudentDto(JSON.parse(output));
         }), (0, operators_1.catchError)(e => {
+            var _a, _b, _c, _d;
             var error = new error_response_1.ErrorResponse({
-                errorCode: e.response.status,
-                errorMessage: e.response.data.params.errmsg
+                errorCode: (_a = e.response) === null || _a === void 0 ? void 0 : _a.status,
+                errorMessage: (_d = (_c = (_b = e.response) === null || _b === void 0 ? void 0 : _b.data) === null || _c === void 0 ? void 0 : _c.params) === null || _d === void 0 ? void 0 : _d.errmsg
             });
             throw new common_1.HttpException(error, e.response.status);
         }));
     }
     async createStudent(studentDto) {
+        var responseTemplate = require('./../../response_templates/student/create_student_response.json');
+        var requestTemplate = require('./../../response_templates/student/create_student_request.json');
+        var input = Mustache.render(JSON.stringify(requestTemplate), studentDto);
         const headersRequest = {
             'Content-Type': 'application/json',
         };
-        return this.httpService.post(`${this.url}`, studentDto, { headers: headersRequest })
+        return this.httpService.post(`${this.url}`, new save_student_dto_1.SaveStudentDto(JSON.parse(input)), { headers: headersRequest })
             .pipe((0, operators_1.map)(response => {
-            return new student_response_dto_1.StudentResponseDto({
-                studentId: response.data.result.Student.osid,
-                responseMessage: "Student Saved Successfully",
-                responseCode: response.data.responseCode
-            });
+            var output = Mustache.render(JSON.stringify(responseTemplate), response.data);
+            return new student_response_dto_1.StudentResponseDto(JSON.parse(output));
         }), (0, operators_1.catchError)(e => {
-            console.log(e);
             var error = new error_response_1.ErrorResponse({
                 errorCode: e.response.status,
                 errorMessage: e.response.data.params.errmsg
@@ -55,18 +59,17 @@ let StudentService = class StudentService {
         }));
     }
     async updateStudent(studentId, studentDto) {
+        var responseTemplate = require('./../../response_templates/student/create_student_response.json');
+        var requestTemplate = require('./../../response_templates/student/create_student_request.json');
+        var input = Mustache.render(JSON.stringify(requestTemplate), studentDto);
         const headersRequest = {
             'Content-Type': 'application/json',
         };
-        return this.httpService.patch(`${this.url}/${studentId}`, studentDto, { headers: headersRequest })
+        return this.httpService.patch(`${this.url}/${studentId}`, new save_student_dto_1.SaveStudentDto(JSON.parse(input)), { headers: headersRequest })
             .pipe((0, operators_1.map)(response => {
-            return new student_response_dto_1.StudentResponseDto({
-                studentId: response.data.result.Student.osid,
-                responseMessage: "Student Updated Successfully",
-                responseCode: response.data.responseCode
-            });
+            var output = Mustache.render(JSON.stringify(responseTemplate), response.data);
+            return new student_dto_1.StudentDto(JSON.parse(output));
         }), (0, operators_1.catchError)(e => {
-            console.log(e.response.data);
             var error = new error_response_1.ErrorResponse({
                 errorCode: e.response.status,
                 errorMessage: e.response.data.params.errmsg
@@ -75,16 +78,17 @@ let StudentService = class StudentService {
         }));
     }
     async searchStudent(studentSearchDto) {
+        var template = require('./../../response_templates/student/find_student_response.json');
         const headersRequest = {
             'Content-Type': 'application/json',
         };
         return this.httpService.post(`${this.url}/search`, studentSearchDto, { headers: headersRequest })
             .pipe((0, operators_1.map)(response => {
             return response.data.map(item => {
-                return new student_dto_1.StudentDto(item);
+                var output = Mustache.render(JSON.stringify(template), item);
+                return new student_dto_1.StudentDto(JSON.parse(output));
             });
         }), (0, operators_1.catchError)(e => {
-            console.log(e);
             var error = new error_response_1.ErrorResponse({
                 errorCode: e.response.status,
                 errorMessage: e.response.data.params.errmsg
@@ -93,6 +97,7 @@ let StudentService = class StudentService {
         }));
     }
     async findStudentByClass(searchClassId) {
+        var template = require('./../../response_templates/student/find_student_response.json');
         const headersRequest = {
             'Content-Type': 'application/json',
         };
@@ -107,7 +112,8 @@ let StudentService = class StudentService {
         return this.httpService.post(`${this.url}/search`, studentSearchDto, { headers: headersRequest })
             .pipe((0, operators_1.map)(response => {
             return response.data.map(item => {
-                return new student_dto_1.StudentDto(item);
+                var output = Mustache.render(JSON.stringify(template), item);
+                return new student_dto_1.StudentDto(JSON.parse(output));
             });
         }), (0, operators_1.catchError)(e => {
             console.log(e);
