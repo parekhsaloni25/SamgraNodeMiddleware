@@ -4,9 +4,15 @@ export abstract class BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-    createDateTime: Date;
+    @Column({ type: 'timestamptz', default: () => "CURRENT_TIMESTAMP(6)" })
+    createdOn: Date;
 
-    @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-    lastChangedDateTime: Date;
+    @Column({ type: 'varchar', nullable: true })
+    createdBy: Date;
+
+    @Column({ type: 'timestamptz', default: () => "CURRENT_TIMESTAMP(6)" })
+    updatedOn: Date;
+
+    @Column({ type: 'varchar', nullable: true })
+    updatedy: Date;
 }

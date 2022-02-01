@@ -19,6 +19,7 @@ import {
 import { AttendanceSearchDto } from "./dto/attendance-search.dto ";
 import { AttendanceDto } from "./dto/attendance.dto";
 import { AttendanceService } from "./attendance.service";
+import { Attendance } from "./attendance.entity";
 
 @Controller("attendance")
 export class AttendanceController {
@@ -33,48 +34,23 @@ export class AttendanceController {
     return this.attendanceService.findById(attendanceId);
   }
 
+  @Get()
+  public async getAttendanceByDate(@Query("fromDate") fromDate: string,
+  @Query("toDate") toDate: string, 
+  @Query("groupId") groupId: string,
+  @Query("topicId") topicId: string ) : Promise<Attendance[]> {
+    return await this.attendanceService.findByDate(fromDate,toDate,groupId,topicId);
+  }
+
   @Post()
-  @UseInterceptors(ClassSerializerInterceptor)
-  public async createAttendance(@Body() attendanceDto: AttendanceDto )  {
+  public async createAttendance(@Body() attendanceDto: AttendanceDto[] )  {
     return this.attendanceService.createAttendance(attendanceDto);
   }
 
-  @Put("/:id")
-  @UseInterceptors(ClassSerializerInterceptor)
-  public async updateAttendance(@Param("id") attendanceId: string, @Body() attendanceDto: AttendanceDto )  {
-    return this.attendanceService.updateAttendance(attendanceId,attendanceDto);
+  @Put()
+  public async updateAttendance(@Body() attendanceDto: AttendanceDto)  {
+    return this.attendanceService.updateAttendance(attendanceDto);
   }
 
-  @Post("/search")
-  @UseInterceptors(ClassSerializerInterceptor)
-  @SerializeOptions({
-    strategy: 'excludeAll'
-  })
-  public async searchAttendance(@Body() attendanceSearchDto: AttendanceSearchDto )  {
-   return this.attendanceService.searchAttendance(attendanceSearchDto);
-
-  }
-
-  @Post("/findByClass")
-  @UseInterceptors(ClassSerializerInterceptor)
-  @SerializeOptions({
-    strategy: 'excludeAll'
-  })
-  public async findAttendanceByClass(@Query('classId') classId : String,
-  @Query('fromDate') fromDate : String,@Query('toDate') toDate : String)  {
-    return this.attendanceService.findAttendanceByClass(classId,fromDate,toDate);
-  } 
-
-
-  @Post("/findByClassAndSubject")
-  @UseInterceptors(ClassSerializerInterceptor)
-  @SerializeOptions({
-    strategy: 'excludeAll'
-  })
-  public async findByClassAndSubject(@Query('classId') classId : String,
-  @Query('classId') subjectId : String,
-  @Query('fromDate') fromDate : String,@Query('toDate') toDate : String)  {
-    return this.attendanceService.findAttendanceByClassAndSubject(classId,subjectId,fromDate,toDate);
-  } 
  
 }
