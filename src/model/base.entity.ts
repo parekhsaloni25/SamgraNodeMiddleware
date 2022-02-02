@@ -1,12 +1,18 @@
-import { PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn } from 'typeorm';
+import { PrimaryGeneratedColumn, Column } from 'typeorm';
 
 export abstract class BaseEntity {
     @PrimaryGeneratedColumn('identity')
     id: string;
 
-    @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-    createDateTime: string;
+    @Column({ type: 'timestamptz', default: () => "CURRENT_TIMESTAMP(6)" })
+    createdOn: Date;
 
-    @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
-    lastChangedDateTime: string;
+    @Column({ type: 'varchar', nullable: true })
+    createdBy: string;
+
+    @Column({ type: 'timestamptz', default: () => "CURRENT_TIMESTAMP(6)" })
+    updatedOn: Date;
+
+    @Column({ type: 'varchar', nullable: true })
+    updatedy: string;
 }
