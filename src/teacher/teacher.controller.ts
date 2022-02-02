@@ -16,7 +16,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { TeacherSearchDto } from "./dto/teacher-search.dto ";
+import { TeacherSearchDto } from "./dto/teacher-search.dto";
 import { TeacherDto } from "./dto/teacher.dto";
 import { TeacherService } from "./teacher.service";
 

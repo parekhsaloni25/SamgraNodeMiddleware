@@ -16,7 +16,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { ConfigSearchDto } from "./dto/config-search.dto ";
+import { ConfigSearchDto } from "./dto/config-search.dto";
 import { ConfigDto } from "./dto/config.dto";
 import { ConfigService } from "./config.service";
 

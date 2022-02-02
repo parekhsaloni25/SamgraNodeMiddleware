@@ -16,7 +16,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { HolidaySearchDto } from "./dto/holiday-search.dto ";
+import { HolidaySearchDto } from "./dto/holiday-search.dto";
 import { HolidayDto } from "./dto/holiday.dto";
 import { HolidayService } from "./holiday.service";
 

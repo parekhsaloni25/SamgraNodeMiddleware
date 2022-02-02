@@ -16,7 +16,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { TimetableSearchDto } from "./dto/timetable-search.dto ";
+import { TimetableSearchDto } from "./dto/timetable-search.dto";
 import { TimetableDto } from "./dto/timetable.dto";
 import { TimetableService } from "./timetable.service";
 

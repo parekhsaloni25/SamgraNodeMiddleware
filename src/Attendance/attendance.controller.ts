@@ -16,7 +16,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
-import { AttendanceSearchDto } from "./dto/attendance-search.dto ";
+import { AttendanceSearchDto } from "./dto/attendance-search.dto";
 import { AttendanceDto } from "./dto/attendance.dto";
 import { AttendanceService } from "./attendance.service";
 import { Attendance } from "./attendance.entity";

@@ -1,7 +1,7 @@
 import { PrimaryGeneratedColumn, Column } from 'typeorm';
 
 export abstract class BaseEntity {
-    @PrimaryGeneratedColumn('identity')
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column({ type: 'timestamptz', default: () => "CURRENT_TIMESTAMP(6)" })

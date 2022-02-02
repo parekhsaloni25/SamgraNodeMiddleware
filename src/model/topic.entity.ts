@@ -4,7 +4,7 @@ import { BaseEntity } from './base.entity';
 @Entity({ name: 'topic' })
 export class Topic extends BaseEntity {
 
-    @Column({ type: 'uuid' })
+    @Column({ type: 'varchar' })
     schoolId: string;
 
     @Column({ type: 'varchar', length: 300 })

@@ -7,7 +7,7 @@ import { AxiosResponse } from 'axios';
 import { HolidayDto} from './dto/holiday.dto';
 import { ErrorResponse } from './../error-response';
 import { HolidayResponseDto } from './dto/holiday-response.dto';
-import { HolidaySearchDto } from './dto/holiday-search.dto ';
+import { HolidaySearchDto } from './dto/holiday-search.dto';
 
 @Injectable()
 export class HolidayService {

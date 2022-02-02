@@ -7,7 +7,7 @@ import { AxiosResponse } from 'axios';
 import { TimetableDto} from './dto/timetable.dto';
 import { ErrorResponse } from './../error-response';
 import { TimetableResponseDto } from './dto/timetable-response.dto';
-import { TimetableSearchDto } from './dto/timetable-search.dto ';
+import { TimetableSearchDto } from './dto/timetable-search.dto';
 
 @Injectable()
 export class TimetableService {

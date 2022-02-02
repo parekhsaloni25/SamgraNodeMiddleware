@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { AttendanceDto} from './dto/attendance.dto';
 import { AttendanceResponseDto } from './dto/attendance-response.dto';
-import { AttendanceSearchDto } from './dto/attendance-search.dto ';
+import { AttendanceSearchDto } from './dto/attendance-search.dto';
 import { ErrorResponse } from './../error-response';
 import { Repository } from 'typeorm';
 import { Attendance } from './attendance.entity';

@@ -7,7 +7,7 @@ import { AxiosResponse } from 'axios';
 import { SchoolDto} from './dto/school.dto';
 import { ErrorResponse } from '../error-response';
 import { SchoolResponseDto } from './dto/school-response.dto';
-import { SchoolSearchDto } from './dto/school-search.dto ';
+import { SchoolSearchDto } from './dto/school-search.dto';
 
 import Mustache = require("mustache");
 import { SaveSchoolDto } from './dto/save-school.dto';

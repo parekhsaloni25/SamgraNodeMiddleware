@@ -25,7 +25,7 @@ export class GroupMembershipService {
       
       return new SuccessResponse({
         statusCode : response.statusCode,
-        message :'GroupMembership is created Successfully',
+        message :'Group membership is created Successfully',
         data : data,
       });
     } catch(e) {
@@ -43,7 +43,7 @@ export class GroupMembershipService {
       
       return new SuccessResponse({
         statusCode : response.statusCode,
-        message :'GroupMemberships found Successfully',
+        message :'Group memberships found Successfully',
         data : data,
       });
     } catch(e) {
@@ -61,7 +61,7 @@ export class GroupMembershipService {
       
       return new SuccessResponse({
         statusCode : response.statusCode,
-        message :'GroupMembership found Successfully by its id',
+        message :'Group membership found Successfully by its id',
         data : data,
       });
     } catch(e) {
@@ -79,7 +79,7 @@ export class GroupMembershipService {
       
       return new SuccessResponse({
         statusCode : response.statusCode,
-        message :'GroupMembership found Successfully by schoolId',
+        message :'Group membership found Successfully by schoolId',
         data : data,
       });
     } catch(e) {
@@ -97,7 +97,7 @@ export class GroupMembershipService {
       
       return new SuccessResponse({
         statusCode : response.statusCode,
-        message :'GroupMembership found Successfully by userId',
+        message :'Group membership found Successfully by userId',
         data : data,
       });
     } catch(e) {
@@ -115,7 +115,7 @@ export class GroupMembershipService {
       
       return new SuccessResponse({
         statusCode : response.statusCode,
-        message :'GroupMembership is updated Successfully',
+        message :'Group membership is updated Successfully',
         data : data,
       });
     } catch(e) {
@@ -133,7 +133,7 @@ export class GroupMembershipService {
       
       return new SuccessResponse({
         statusCode : response.statusCode,
-        message :'GroupMembership is deleted Successfully',
+        message :'Group membership is deleted Successfully',
         data : data,
       });
     } catch(e) {

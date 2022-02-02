@@ -14,10 +14,10 @@ export class Config extends BaseEntity {
     value: string;    
 
     @Column({ type: 'varchar', length: 300 })
-    context : string; // (state / school)
+    context: string; // (state / school)
 
-    @Column({ type: 'uuid' })
-    contextId	: string; // (schoolId in case of school)
+    @Column({ type: 'varchar' })
+    contextId: string; // (schoolId in case of school)
 
     @Column({ type: 'boolean' })
     canOverride: boolean;    

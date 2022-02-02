@@ -53,4 +53,4 @@ ormconfig.json
 /api/node_modules
 
 # Migration folder
-/src/Migration
+/src/migration/*

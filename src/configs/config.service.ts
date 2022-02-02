@@ -7,7 +7,7 @@ import { AxiosResponse } from 'axios';
 import { ConfigDto} from './dto/config.dto';
 import { ErrorResponse } from './../error-response';
 import { ConfigResponseDto } from './dto/config-response.dto';
-import { ConfigSearchDto } from './dto/config-search.dto ';
+import { ConfigSearchDto } from './dto/config-search.dto';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 require('dotenv').config();
