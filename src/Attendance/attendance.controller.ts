@@ -38,8 +38,18 @@ export class AttendanceController {
   public async getAttendanceByDate(@Query("fromDate") fromDate: string,
   @Query("toDate") toDate: string, 
   @Query("groupId") groupId: string,
-  @Query("topicId") topicId: string ) : Promise<Attendance[]> {
-    return await this.attendanceService.findByDate(fromDate,toDate,groupId,topicId);
+  @Query("topicId") topicId: string,
+  @Query("schoolId") schoolId: string ) : Promise<Attendance[]> {
+    return await this.attendanceService.findByDate(fromDate,toDate,groupId,topicId,schoolId);
+  }
+
+  @Get('/find/report')
+  public async getAttendanceReports(@Query("fromDate") fromDate: string,
+  @Query("toDate") toDate: string, 
+  @Query("groupId") groupId: string,
+  @Query("topicId") topicId: string,
+  @Query("schoolId") schoolId: string) : Promise<Attendance[]> {
+    return await this.attendanceService.findReportRecords(fromDate,toDate,groupId,topicId,schoolId);
   }
 
   @Post()
