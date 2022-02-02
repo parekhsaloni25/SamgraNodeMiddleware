@@ -8,11 +8,11 @@ export abstract class BaseEntity {
     createdOn: Date;
 
     @Column({ type: 'varchar', nullable: true })
-    createdBy: Date;
+    createdBy: string;
 
     @Column({ type: 'timestamptz', default: () => "CURRENT_TIMESTAMP(6)" })
     updatedOn: Date;
 
     @Column({ type: 'varchar', nullable: true })
-    updatedy: Date;
+    updatedy: string;
 }
