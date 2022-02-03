@@ -1,4 +1,5 @@
-import { Group } from 'src/group/group.entity';
+
+import { Group } from '../group/group.entity';
 import { Entity, Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from 'typeorm';
 import { BaseEntity } from './../model/base.entity';
 
