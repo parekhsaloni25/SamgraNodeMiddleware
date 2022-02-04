@@ -5,7 +5,7 @@ import { BaseEntity } from '../model/base.entity';
 export class Holiday extends BaseEntity {
 
     @Column({ type: 'timestamptz' })
-    date: Date;
+    date: string;
 
     @Column({ type: 'varchar', length: 300 })
     remark: string;
