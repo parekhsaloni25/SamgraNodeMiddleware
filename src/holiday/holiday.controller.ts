@@ -3,20 +3,12 @@ import {
   Put,
   Get,
   Body,
-  Res,
   Param,
-  UseGuards,
   HttpStatus,
-  NotFoundException,
-  ClassSerializerInterceptor,
-  UseInterceptors,
   Post,
-  Query,
-  SerializeOptions,
-  UsePipes,
-  ValidationPipe,
+  HttpException,
+  Delete,
 } from "@nestjs/common";
-import { HolidaySearchDto } from "./dto/holiday-search.dto";
 import { HolidayDto } from "./dto/holiday.dto";
 import { HolidayService } from "./holiday.service";
 
@@ -24,64 +16,59 @@ import { HolidayService } from "./holiday.service";
 export class HolidayController {
   constructor(private readonly holidayService: HolidayService) {}
 
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Get("/:id")
-  @SerializeOptions({
-    strategy: 'excludeAll'
-  })
-  public async getHolidayById(@Param("id") holidayId: string )  {
-    return this.holidayService.findById(holidayId);
+  @Post()
+  async create(@Body() holidayDto: HolidayDto) {
+    const result = await this.holidayService.createHoliday(holidayDto);
+    if (!result)
+    throw new HttpException('Error adding new holiday', HttpStatus.BAD_REQUEST);
+    return result;
   }
 
   @Get()
-  @UseInterceptors(ClassSerializerInterceptor)
-  @SerializeOptions({
-    strategy: 'excludeAll'
-  })
-  public async findAll()  {
-    return this.holidayService.findAll();
-  } 
-
-  @Post()
-  @UseInterceptors(ClassSerializerInterceptor)
-  public async createHoliday(@Body() holidayDto: HolidayDto )  {
-    return this.holidayService.createHoliday(holidayDto);
+  async findAll() {
+    const result = await this.holidayService.findAllHolidays();
+    if (!result)
+    throw new HttpException('Error finding holidays', HttpStatus.BAD_REQUEST);
+    return result;
+  }
+  
+  @Get(':id')
+  async findOne(@Param('id') holidayId: string) {
+      const result = await this.holidayService.findHolidayById(holidayId);
+      if (!result)
+      throw new HttpException('Error finding holiday by its id', HttpStatus.BAD_REQUEST);
+    return result;
   }
 
-  @Put("/:id")
-  @UseInterceptors(ClassSerializerInterceptor)
-  public async updateHoliday(@Param("id") holidayId: string, @Body() holidayDto: HolidayDto )  {
-    return this.holidayService.updateHoliday(holidayId,holidayDto);
+  @Put(':id')
+  async update(@Param('id') holidayId: string, @Body() holidayDto: HolidayDto) {
+      const result = await this.holidayService.updateHoliday(holidayId, holidayDto);
+      if (!result)
+      throw new HttpException('Error updating holiday', HttpStatus.BAD_REQUEST);
+    return result;
   }
 
-  @Post("/search")
-  @UseInterceptors(ClassSerializerInterceptor)
-  @SerializeOptions({
-    strategy: 'excludeAll'
-  })
-  public async searchHoliday(@Body() holidaySearchDto: HolidaySearchDto )  {
-   return this.holidayService.searchHoliday(holidaySearchDto);
-
+  @Delete(':id')
+  async delete(@Param('id') holidayId: string) {
+    const result = await this.holidayService.deleteHoliday(holidayId);
+    if (!result)
+    throw new HttpException('Error deleting holiday', HttpStatus.BAD_REQUEST);
+    return result;
   }
 
-  @Get("/findByYear/:year")
-  @UseInterceptors(ClassSerializerInterceptor)
-  @SerializeOptions({
-    strategy: 'excludeAll'
-  })
-  public async findHolidayByYear(@Param('year') year : String)  {
-    return this.holidayService.findHolidayByYear(year);
-  } 
+  @Get('/findByYear/:year')
+  async findByYear(@Param('year') year: string) {
+      const result = await this.holidayService.findHolidayByYear(year);
+      if (!result)
+      throw new HttpException('Error finding holiday by its year', HttpStatus.BAD_REQUEST);
+    return result;
+  }
 
-  @Get("/findByContext/:context")
-  @UseInterceptors(ClassSerializerInterceptor)
-  @SerializeOptions({
-    strategy: 'excludeAll'
-  })
-  public async findHolidayByContext(@Param('context') context : String)  {
-    return this.holidayService.findHolidayByContext(context);
-  } 
-
-
- 
+  @Get('/findByContext/:context')
+  async findByContext(@Param('context') context: string) {
+      const result = await this.holidayService.findHolidayByContext(context);
+      if (!result)
+      throw new HttpException('Error finding holiday by its context', HttpStatus.BAD_REQUEST);
+    return result;
+  }
 }
