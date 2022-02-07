@@ -1,6 +1,5 @@
-
 import { Group } from '../group/group.entity';
-import { Entity, Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from './../model/base.entity';
 
 @Entity({ name: 'groupMembership' })

@@ -14,12 +14,13 @@ import { dbConfigService } from './configs/config.service';
 import { GroupModule } from './group/group.module';
 import { SchoolModule } from './school/school.module';
 import { GroupMembershipModule } from './groupMembership/groupMembership.module';
+import { AdminConfigModule } from './adminConfig/adminConfig.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dbConfigService.getTypeOrmConfig()),
     ConfigModule.forRoot(),
-    StudentModule,HolidayModule,ConfigurationModule,AttendanceModule,TimetableModule,TeacherModule,SchoolModule,GroupModule,GroupMembershipModule],
+    StudentModule,HolidayModule,ConfigurationModule,AttendanceModule,TimetableModule,TeacherModule,SchoolModule,GroupModule,GroupMembershipModule,AdminConfigModule],
     controllers: [AppController],
     providers: [AppService],
 })
