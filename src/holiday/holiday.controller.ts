@@ -3,7 +3,6 @@ import {
   Put,
   Get,
   Body,
-  Res,
   Param,
   HttpStatus,
   Post,

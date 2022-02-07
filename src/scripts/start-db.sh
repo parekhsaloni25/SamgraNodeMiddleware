@@ -1,7 +1,7 @@
 set -e
 
 SERVER="Servers";
-PW="rutvi12345";
+PW="123456";
 DB="my_database";
 
 echo "echo stop & remove old docker [$SERVER] and starting new fresh instance of [$SERVER]"
