@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConfigController = void 0;
 const common_1 = require("@nestjs/common");
-const config_search_dto_1 = require("./dto/config-search.dto ");
+const config_search_dto_1 = require("./dto/config-search.dto");
 const config_dto_1 = require("./dto/config.dto");
 const config_service_1 = require("./config.service");
 let ConfigController = class ConfigController {

@@ -10,12 +10,13 @@ exports.HolidayModule = void 0;
 const common_1 = require("@nestjs/common");
 const holiday_service_1 = require("./holiday.service");
 const holiday_controller_1 = require("./holiday.controller");
-const axios_1 = require("@nestjs/axios");
+const holiday_entity_1 = require("./holiday.entity");
+const typeorm_1 = require("@nestjs/typeorm");
 let HolidayModule = class HolidayModule {
 };
 HolidayModule = __decorate([
     (0, common_1.Module)({
-        imports: [axios_1.HttpModule],
+        imports: [typeorm_1.TypeOrmModule.forFeature([holiday_entity_1.Holiday])],
         controllers: [holiday_controller_1.HolidayController],
         providers: [holiday_service_1.HolidayService]
     })

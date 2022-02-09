@@ -1,13 +1,12 @@
-import { AttendanceSearchDto } from "./dto/attendance-search.dto ";
 import { AttendanceDto } from "./dto/attendance.dto";
 import { AttendanceService } from "./attendance.service";
+import { Attendance } from "./attendance.entity";
 export declare class AttendanceController {
     private readonly attendanceService;
     constructor(attendanceService: AttendanceService);
-    getAttendanceById(attendanceId: string): Promise<import("rxjs").Observable<AttendanceDto>>;
-    createAttendance(attendanceDto: AttendanceDto): Promise<import("rxjs").Observable<import("./dto/attendance-response.dto").AttendanceResponseDto>>;
-    updateAttendance(attendanceId: string, attendanceDto: AttendanceDto): Promise<import("rxjs").Observable<import("./dto/attendance-response.dto").AttendanceResponseDto>>;
-    searchAttendance(attendanceSearchDto: AttendanceSearchDto): Promise<import("rxjs").Observable<any>>;
-    findAttendanceByClass(classId: String, fromDate: String, toDate: String): Promise<import("rxjs").Observable<any>>;
-    findByClassAndSubject(classId: String, subjectId: String, fromDate: String, toDate: String): Promise<import("rxjs").Observable<any>>;
+    getAttendanceById(attendanceId: string): Promise<Attendance>;
+    getAttendanceByDate(fromDate: string, toDate: string, groupId: string, topicId: string, schoolId: string): Promise<Attendance[]>;
+    getAttendanceReports(fromDate: string, toDate: string, groupId: string, topicId: string, schoolId: string): Promise<Attendance[]>;
+    createAttendance(attendanceDto: AttendanceDto[]): Promise<(AttendanceDto & Attendance)[]>;
+    updateAttendance(attendanceDto: AttendanceDto): Promise<AttendanceDto & Attendance>;
 }

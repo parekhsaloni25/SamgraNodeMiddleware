@@ -14,7 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AttendanceController = void 0;
 const common_1 = require("@nestjs/common");
-const attendance_search_dto_1 = require("./dto/attendance-search.dto ");
 const attendance_dto_1 = require("./dto/attendance.dto");
 const attendance_service_1 = require("./attendance.service");
 let AttendanceController = class AttendanceController {
@@ -24,20 +23,17 @@ let AttendanceController = class AttendanceController {
     async getAttendanceById(attendanceId) {
         return this.attendanceService.findById(attendanceId);
     }
+    async getAttendanceByDate(fromDate, toDate, groupId, topicId, schoolId) {
+        return await this.attendanceService.findByDate(fromDate, toDate, groupId, topicId, schoolId);
+    }
+    async getAttendanceReports(fromDate, toDate, groupId, topicId, schoolId) {
+        return await this.attendanceService.findReportRecords(fromDate, toDate, groupId, topicId, schoolId);
+    }
     async createAttendance(attendanceDto) {
         return this.attendanceService.createAttendance(attendanceDto);
     }
-    async updateAttendance(attendanceId, attendanceDto) {
-        return this.attendanceService.updateAttendance(attendanceId, attendanceDto);
-    }
-    async searchAttendance(attendanceSearchDto) {
-        return this.attendanceService.searchAttendance(attendanceSearchDto);
-    }
-    async findAttendanceByClass(classId, fromDate, toDate) {
-        return this.attendanceService.findAttendanceByClass(classId, fromDate, toDate);
-    }
-    async findByClassAndSubject(classId, subjectId, fromDate, toDate) {
-        return this.attendanceService.findAttendanceByClassAndSubject(classId, subjectId, fromDate, toDate);
+    async updateAttendance(attendanceDto) {
+        return this.attendanceService.updateAttendance(attendanceDto);
     }
 };
 __decorate([
@@ -52,63 +48,41 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AttendanceController.prototype, "getAttendanceById", null);
 __decorate([
+    (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)("fromDate")),
+    __param(1, (0, common_1.Query)("toDate")),
+    __param(2, (0, common_1.Query)("groupId")),
+    __param(3, (0, common_1.Query)("topicId")),
+    __param(4, (0, common_1.Query)("schoolId")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], AttendanceController.prototype, "getAttendanceByDate", null);
+__decorate([
+    (0, common_1.Get)('/find/report'),
+    __param(0, (0, common_1.Query)("fromDate")),
+    __param(1, (0, common_1.Query)("toDate")),
+    __param(2, (0, common_1.Query)("groupId")),
+    __param(3, (0, common_1.Query)("topicId")),
+    __param(4, (0, common_1.Query)("schoolId")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String, String, String]),
+    __metadata("design:returntype", Promise)
+], AttendanceController.prototype, "getAttendanceReports", null);
+__decorate([
     (0, common_1.Post)(),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Array]),
+    __metadata("design:returntype", Promise)
+], AttendanceController.prototype, "createAttendance", null);
+__decorate([
+    (0, common_1.Put)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [attendance_dto_1.AttendanceDto]),
     __metadata("design:returntype", Promise)
-], AttendanceController.prototype, "createAttendance", null);
-__decorate([
-    (0, common_1.Put)("/:id"),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    __param(0, (0, common_1.Param)("id")),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, attendance_dto_1.AttendanceDto]),
-    __metadata("design:returntype", Promise)
 ], AttendanceController.prototype, "updateAttendance", null);
-__decorate([
-    (0, common_1.Post)("/search"),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.SerializeOptions)({
-        strategy: 'excludeAll'
-    }),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [attendance_search_dto_1.AttendanceSearchDto]),
-    __metadata("design:returntype", Promise)
-], AttendanceController.prototype, "searchAttendance", null);
-__decorate([
-    (0, common_1.Post)("/findByClass"),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.SerializeOptions)({
-        strategy: 'excludeAll'
-    }),
-    __param(0, (0, common_1.Query)('classId')),
-    __param(1, (0, common_1.Query)('fromDate')),
-    __param(2, (0, common_1.Query)('toDate')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String,
-        String, String]),
-    __metadata("design:returntype", Promise)
-], AttendanceController.prototype, "findAttendanceByClass", null);
-__decorate([
-    (0, common_1.Post)("/findByClassAndSubject"),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.SerializeOptions)({
-        strategy: 'excludeAll'
-    }),
-    __param(0, (0, common_1.Query)('classId')),
-    __param(1, (0, common_1.Query)('classId')),
-    __param(2, (0, common_1.Query)('fromDate')),
-    __param(3, (0, common_1.Query)('toDate')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String,
-        String,
-        String, String]),
-    __metadata("design:returntype", Promise)
-], AttendanceController.prototype, "findByClassAndSubject", null);
 AttendanceController = __decorate([
     (0, common_1.Controller)("attendance"),
     __metadata("design:paramtypes", [attendance_service_1.AttendanceService])

@@ -18,16 +18,19 @@ const holiday_module_1 = require("./holiday/holiday.module");
 const student_module_1 = require("./student/student.module");
 const teacher_module_1 = require("./teacher/teacher.module");
 const timetable_module_1 = require("./Timetable/timetable.module");
-const config_service_1 = require("./configs/config.service");
+const group_module_1 = require("./group/group.module");
 const school_module_1 = require("./school/school.module");
+const groupMembership_module_1 = require("./groupMembership/groupMembership.module");
+const adminConfig_module_1 = require("./adminConfig/adminConfig.module");
+const typeOrmConfig = require("./typeorm.config");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot(config_service_1.dbConfigService.getTypeOrmConfig()),
+            typeorm_1.TypeOrmModule.forRoot(typeOrmConfig),
             config_1.ConfigModule.forRoot(),
-            student_module_1.StudentModule, holiday_module_1.HolidayModule, configuration_module_1.ConfigurationModule, attendance_module_1.AttendanceModule, timetable_module_1.TimetableModule, teacher_module_1.TeacherModule, school_module_1.SchoolModule
+            student_module_1.StudentModule, holiday_module_1.HolidayModule, configuration_module_1.ConfigurationModule, attendance_module_1.AttendanceModule, timetable_module_1.TimetableModule, teacher_module_1.TeacherModule, school_module_1.SchoolModule, group_module_1.GroupModule, groupMembership_module_1.GroupMembershipModule, adminConfig_module_1.AdminConfigModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

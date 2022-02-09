@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TimetableController = void 0;
 const common_1 = require("@nestjs/common");
-const timetable_search_dto_1 = require("./dto/timetable-search.dto ");
+const timetable_search_dto_1 = require("./dto/timetable-search.dto");
 const timetable_dto_1 = require("./dto/timetable.dto");
 const timetable_service_1 = require("./timetable.service");
 let TimetableController = class TimetableController {

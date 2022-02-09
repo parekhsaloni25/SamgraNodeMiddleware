@@ -1,13 +1,13 @@
 export declare class AttendanceDto {
-    osid: string;
-    attendanceRecordId: string;
-    studentId: string;
     schoolId: string;
-    classId: string;
-    subjectId: string;
-    date: string;
-    isApproved: string;
+    userId: string;
+    groupId: string;
+    topicId: string;
+    eventId: string;
+    date: Date;
     attendance: string;
     remark: string;
+    approved: string;
+    approvedBy: string;
     constructor(partial: AttendanceDto);
 }

@@ -6,15 +6,46 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppService = void 0;
+exports.dbConfigService = exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
 let AppService = class AppService {
     getHello() {
-        return 'Hello World!';
+        return "Hello World!";
     }
 };
 AppService = __decorate([
     (0, common_1.Injectable)()
 ], AppService);
 exports.AppService = AppService;
+class DbConfigService {
+    constructor(env) {
+        this.env = env;
+    }
+    getValue(key, throwOnMissing = true) {
+        const value = this.env[key];
+        if (!value && throwOnMissing) {
+            throw new Error(`config error - missing env.${key}`);
+        }
+        return value;
+    }
+    ensureValues(keys) {
+        keys.forEach((k) => this.getValue(k, true));
+        return this;
+    }
+    getPort() {
+        return this.getValue("PORT", true);
+    }
+    isProduction() {
+        const mode = this.getValue("MODE", false);
+        return mode != "DEV";
+    }
+}
+const dbConfigService = new DbConfigService(process.env).ensureValues([
+    "POSTGRES_HOST",
+    "POSTGRES_PORT",
+    "POSTGRES_USER",
+    "POSTGRES_PASSWORD",
+    "POSTGRES_DATABASE",
+]);
+exports.dbConfigService = dbConfigService;
 //# sourceMappingURL=app.service.js.map

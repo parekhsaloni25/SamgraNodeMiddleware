@@ -1,17 +1,17 @@
-import { HttpService } from '@nestjs/axios';
-import { Observable } from 'rxjs';
 import { HolidayDto } from './dto/holiday.dto';
-import { HolidayResponseDto } from './dto/holiday-response.dto';
-import { HolidaySearchDto } from './dto/holiday-search.dto ';
+import { Repository } from 'typeorm';
+import { Holiday } from './holiday.entity';
+import { SuccessResponse } from '../success-response';
 export declare class HolidayService {
-    private httpService;
-    constructor(httpService: HttpService);
-    url: string;
-    findById(holidayId: string): Promise<Observable<HolidayDto>>;
-    createHoliday(holidayDto: HolidayDto): Promise<Observable<HolidayResponseDto>>;
-    updateHoliday(holidayId: string, holidayDto: HolidayDto): Promise<Observable<HolidayResponseDto>>;
-    searchHoliday(holidaySearchDto: HolidaySearchDto): Promise<Observable<any>>;
-    findHolidayByYear(yearInput: String): Promise<Observable<any>>;
-    findHolidayByContext(context: String): Promise<Observable<any>>;
-    findAll(): Promise<Observable<any>>;
+    private readonly holidayRepository;
+    [x: string]: any;
+    private entityManager;
+    constructor(holidayRepository: Repository<Holiday>);
+    createHoliday(holidayDto: HolidayDto): Promise<SuccessResponse>;
+    findAllHolidays(): Promise<SuccessResponse>;
+    findHolidayById(holidayId: string): Promise<SuccessResponse>;
+    updateHoliday(holidayId: string, updateHolidayto: HolidayDto): Promise<SuccessResponse>;
+    deleteHoliday(holidayId: string): Promise<SuccessResponse>;
+    findHolidayByYear(year: string): Promise<SuccessResponse>;
+    findHolidayByContext(context: string): Promise<SuccessResponse>;
 }

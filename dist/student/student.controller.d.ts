@@ -1,4 +1,4 @@
-import { StudentSearchDto } from "./dto/student-search.dto ";
+import { StudentSearchDto } from "./dto/student-search.dto";
 import { StudentDto } from "./dto/student.dto";
 import { StudentService } from "./student.service";
 export declare class StudentController {

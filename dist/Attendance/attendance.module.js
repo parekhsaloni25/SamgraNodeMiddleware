@@ -11,11 +11,15 @@ const common_1 = require("@nestjs/common");
 const attendance_service_1 = require("./attendance.service");
 const attendance_controller_1 = require("./attendance.controller");
 const axios_1 = require("@nestjs/axios");
+const attendance_entity_1 = require("./attendance.entity");
+const typeorm_1 = require("@nestjs/typeorm");
 let AttendanceModule = class AttendanceModule {
 };
 AttendanceModule = __decorate([
     (0, common_1.Module)({
-        imports: [axios_1.HttpModule],
+        imports: [axios_1.HttpModule,
+            typeorm_1.TypeOrmModule.forFeature([attendance_entity_1.Attendance])
+        ],
         controllers: [attendance_controller_1.AttendanceController],
         providers: [attendance_service_1.AttendanceService]
     })

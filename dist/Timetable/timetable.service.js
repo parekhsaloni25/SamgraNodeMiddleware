@@ -16,7 +16,7 @@ const axios_1 = require("@nestjs/axios");
 const timetable_dto_1 = require("./dto/timetable.dto");
 const error_response_1 = require("./../error-response");
 const timetable_response_dto_1 = require("./dto/timetable-response.dto");
-const timetable_search_dto_1 = require("./dto/timetable-search.dto ");
+const timetable_search_dto_1 = require("./dto/timetable-search.dto");
 let TimetableService = class TimetableService {
     constructor(httpService) {
         this.httpService = httpService;

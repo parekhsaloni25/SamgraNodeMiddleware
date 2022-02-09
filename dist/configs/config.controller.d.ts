@@ -1,4 +1,4 @@
-import { ConfigSearchDto } from "./dto/config-search.dto ";
+import { ConfigSearchDto } from "./dto/config-search.dto";
 import { ConfigDto } from "./dto/config.dto";
 import { ConfigService } from "./config.service";
 export declare class ConfigController {

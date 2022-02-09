@@ -8,168 +8,147 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HolidayService = void 0;
 const common_1 = require("@nestjs/common");
-const operators_1 = require("rxjs/operators");
-const axios_1 = require("@nestjs/axios");
-const holiday_dto_1 = require("./dto/holiday.dto");
 const error_response_1 = require("./../error-response");
-const holiday_response_dto_1 = require("./dto/holiday-response.dto");
-const holiday_search_dto_1 = require("./dto/holiday-search.dto ");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const holiday_entity_1 = require("./holiday.entity");
+const success_response_1 = require("../success-response");
+const express_1 = require("express");
 let HolidayService = class HolidayService {
-    constructor(httpService) {
-        this.httpService = httpService;
-        this.url = `${process.env.BASE_URL}/Holiday`;
-    }
-    async findById(holidayId) {
-        return this.httpService.get(`${this.url}/${holidayId}`)
-            .pipe((0, operators_1.map)(response => {
-            return new holiday_dto_1.HolidayDto(response.data);
-        }), (0, operators_1.catchError)(e => {
-            var error = new error_response_1.ErrorResponse({
-                errorCode: e.response.status,
-                errorMessage: e.response.data.params.errmsg
-            });
-            throw new common_1.HttpException(error, e.response.status);
-        }));
+    constructor(holidayRepository) {
+        this.holidayRepository = holidayRepository;
+        this.entityManager = (0, typeorm_2.getManager)();
     }
     async createHoliday(holidayDto) {
-        const headersRequest = {
-            'Content-Type': 'application/json',
-        };
-        return this.httpService.post(`${this.url}`, holidayDto, { headers: headersRequest })
-            .pipe((0, operators_1.map)(response => {
-            return new holiday_response_dto_1.HolidayResponseDto({
-                holidayId: response.data.result.holiday.osid,
-                responseMessage: "Holiday Saved Successfully",
-                responseCode: response.data.responseCode
+        try {
+            const data = await this.holidayRepository.save(holidayDto);
+            return new success_response_1.SuccessResponse({
+                statusCode: express_1.response.statusCode,
+                message: 'Holiday is created Successfully',
+                data: data,
             });
-        }), (0, operators_1.catchError)(e => {
-            console.log(e.response.data);
+        }
+        catch (e) {
             var error = new error_response_1.ErrorResponse({
                 errorCode: e.response.status,
                 errorMessage: e.response.data.params.errmsg
             });
             throw new common_1.HttpException(error, e.response.status);
-        }));
+        }
     }
-    async updateHoliday(holidayId, holidayDto) {
-        const headersRequest = {
-            'Content-Type': 'application/json',
-        };
-        return this.httpService.put(`${this.url}/${holidayId}`, holidayDto, { headers: headersRequest })
-            .pipe((0, operators_1.map)(response => {
-            return new holiday_response_dto_1.HolidayResponseDto({
-                holidayId: response.data.result.holiday.osid,
-                responseMessage: "Holiday Updated Successfully",
-                responseCode: response.data.responseCode
+    async findAllHolidays() {
+        try {
+            const data = await this.holidayRepository.find();
+            return new success_response_1.SuccessResponse({
+                statusCode: express_1.response.statusCode,
+                message: 'Holidays found Successfully',
+                data: data,
             });
-        }), (0, operators_1.catchError)(e => {
-            console.log(e.response.data);
+        }
+        catch (e) {
             var error = new error_response_1.ErrorResponse({
                 errorCode: e.response.status,
                 errorMessage: e.response.data.params.errmsg
             });
             throw new common_1.HttpException(error, e.response.status);
-        }));
+        }
     }
-    async searchHoliday(holidaySearchDto) {
-        const headersRequest = {
-            'Content-Type': 'application/json',
-        };
-        return this.httpService.post(`${this.url}/search`, holidaySearchDto, { headers: headersRequest })
-            .pipe((0, operators_1.map)(response => {
-            return response.data.map(item => {
-                return new holiday_dto_1.HolidayDto(item);
+    async findHolidayById(holidayId) {
+        try {
+            const data = await this.holidayRepository.findOne(holidayId);
+            return new success_response_1.SuccessResponse({
+                statusCode: express_1.response.statusCode,
+                message: 'Holiday found Successfully',
+                data: data,
             });
-        }), (0, operators_1.catchError)(e => {
-            console.log(e);
+        }
+        catch (e) {
             var error = new error_response_1.ErrorResponse({
                 errorCode: e.response.status,
                 errorMessage: e.response.data.params.errmsg
             });
             throw new common_1.HttpException(error, e.response.status);
-        }));
+        }
     }
-    async findHolidayByYear(yearInput) {
-        const headersRequest = {
-            'Content-Type': 'application/json',
-        };
-        var searchFilter = {
-            year: {
-                "eq": yearInput
-            }
-        };
-        var holidaySearchDto = new holiday_search_dto_1.HolidaySearchDto({
-            filters: searchFilter
-        });
-        return this.httpService.post(`${this.url}/search`, holidaySearchDto, { headers: headersRequest })
-            .pipe((0, operators_1.map)(response => {
-            return response.data.map(item => {
-                return new holiday_dto_1.HolidayDto(item);
+    async updateHoliday(holidayId, updateHolidayto) {
+        try {
+            const data = await this.holidayRepository.update(holidayId, updateHolidayto);
+            return new success_response_1.SuccessResponse({
+                statusCode: express_1.response.statusCode,
+                message: 'Holiday is Updated Successfully',
+                data: data,
             });
-        }), (0, operators_1.catchError)(e => {
-            console.log(e);
+        }
+        catch (e) {
             var error = new error_response_1.ErrorResponse({
                 errorCode: e.response.status,
                 errorMessage: e.response.data.params.errmsg
             });
-            throw new common_1.HttpException(e.response.data, e.response.status);
-        }));
+            throw new common_1.HttpException(error, e.response.status);
+        }
+    }
+    async deleteHoliday(holidayId) {
+        try {
+            const data = await this.holidayRepository.delete(holidayId);
+            return new success_response_1.SuccessResponse({
+                statusCode: express_1.response.statusCode,
+                message: 'Holiday is Deleted Successfully',
+                data: data,
+            });
+        }
+        catch (e) {
+            var error = new error_response_1.ErrorResponse({
+                errorCode: e.response.status,
+                errorMessage: e.response.data.params.errmsg
+            });
+            throw new common_1.HttpException(error, e.response.status);
+        }
+    }
+    async findHolidayByYear(year) {
+        try {
+            const data = await this.holidayRepository.find({ year });
+            return new success_response_1.SuccessResponse({
+                statusCode: express_1.response.statusCode,
+                message: 'Holidays by year found Successfully',
+                data: data,
+            });
+        }
+        catch (e) {
+            var error = new error_response_1.ErrorResponse({
+                errorCode: e.response.status,
+                errorMessage: e.response.data.params.errmsg
+            });
+            throw new common_1.HttpException(error, e.response.status);
+        }
     }
     async findHolidayByContext(context) {
-        const headersRequest = {
-            'Content-Type': 'application/json',
-        };
-        var searchFilter = {
-            context: {
-                "eq": context
-            }
-        };
-        var holidaySearchDto = new holiday_search_dto_1.HolidaySearchDto({
-            filters: searchFilter
-        });
-        return this.httpService.post(`${this.url}/search`, holidaySearchDto, { headers: headersRequest })
-            .pipe((0, operators_1.map)(response => {
-            return response.data.map(item => {
-                return new holiday_dto_1.HolidayDto(item);
+        try {
+            const data = await this.holidayRepository.find({ context });
+            return new success_response_1.SuccessResponse({
+                statusCode: express_1.response.statusCode,
+                message: 'Holiday found Successfully',
+                data: data,
             });
-        }), (0, operators_1.catchError)(e => {
-            console.log(e);
+        }
+        catch (e) {
             var error = new error_response_1.ErrorResponse({
                 errorCode: e.response.status,
                 errorMessage: e.response.data.params.errmsg
             });
-            throw new common_1.HttpException(e.response.data, e.response.status);
-        }));
-    }
-    async findAll() {
-        const headersRequest = {
-            'Content-Type': 'application/json',
-        };
-        var searchFilter = {};
-        var holidaySearchDto = new holiday_search_dto_1.HolidaySearchDto({
-            filters: searchFilter
-        });
-        return this.httpService.post(`${this.url}/search`, holidaySearchDto, { headers: headersRequest })
-            .pipe((0, operators_1.map)(response => {
-            return response.data.map(item => {
-                return new holiday_dto_1.HolidayDto(item);
-            });
-        }), (0, operators_1.catchError)(e => {
-            console.log(e);
-            var error = new error_response_1.ErrorResponse({
-                errorCode: e.response.status,
-                errorMessage: e.response.data.params.errmsg
-            });
-            throw new common_1.HttpException(e.response.data, e.response.status);
-        }));
+            throw new common_1.HttpException(error, e.response.status);
+        }
     }
 };
 HolidayService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [axios_1.HttpService])
+    __param(0, (0, typeorm_1.InjectRepository)(holiday_entity_1.Holiday)),
+    __metadata("design:paramtypes", [typeorm_2.Repository])
 ], HolidayService);
 exports.HolidayService = HolidayService;
 //# sourceMappingURL=holiday.service.js.map

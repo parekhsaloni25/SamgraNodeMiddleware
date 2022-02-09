@@ -14,106 +14,104 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HolidayController = void 0;
 const common_1 = require("@nestjs/common");
-const holiday_search_dto_1 = require("./dto/holiday-search.dto ");
 const holiday_dto_1 = require("./dto/holiday.dto");
 const holiday_service_1 = require("./holiday.service");
 let HolidayController = class HolidayController {
     constructor(holidayService) {
         this.holidayService = holidayService;
     }
-    async getHolidayById(holidayId) {
-        return this.holidayService.findById(holidayId);
+    async create(holidayDto) {
+        const result = await this.holidayService.createHoliday(holidayDto);
+        if (!result)
+            throw new common_1.HttpException('Error adding new holiday', common_1.HttpStatus.BAD_REQUEST);
+        return result;
     }
     async findAll() {
-        return this.holidayService.findAll();
+        const result = await this.holidayService.findAllHolidays();
+        if (!result)
+            throw new common_1.HttpException('Error finding holidays', common_1.HttpStatus.BAD_REQUEST);
+        return result;
     }
-    async createHoliday(holidayDto) {
-        return this.holidayService.createHoliday(holidayDto);
+    async findOne(holidayId) {
+        const result = await this.holidayService.findHolidayById(holidayId);
+        if (!result)
+            throw new common_1.HttpException('Error finding holiday by its id', common_1.HttpStatus.BAD_REQUEST);
+        return result;
     }
-    async updateHoliday(holidayId, holidayDto) {
-        return this.holidayService.updateHoliday(holidayId, holidayDto);
+    async update(holidayId, holidayDto) {
+        const result = await this.holidayService.updateHoliday(holidayId, holidayDto);
+        if (!result)
+            throw new common_1.HttpException('Error updating holiday', common_1.HttpStatus.BAD_REQUEST);
+        return result;
     }
-    async searchHoliday(holidaySearchDto) {
-        return this.holidayService.searchHoliday(holidaySearchDto);
+    async delete(holidayId) {
+        const result = await this.holidayService.deleteHoliday(holidayId);
+        if (!result)
+            throw new common_1.HttpException('Error deleting holiday', common_1.HttpStatus.BAD_REQUEST);
+        return result;
     }
-    async findHolidayByYear(year) {
-        return this.holidayService.findHolidayByYear(year);
+    async findByYear(year) {
+        const result = await this.holidayService.findHolidayByYear(year);
+        if (!result)
+            throw new common_1.HttpException('Error finding holiday by its year', common_1.HttpStatus.BAD_REQUEST);
+        return result;
     }
-    async findHolidayByContext(context) {
-        return this.holidayService.findHolidayByContext(context);
+    async findByContext(context) {
+        const result = await this.holidayService.findHolidayByContext(context);
+        if (!result)
+            throw new common_1.HttpException('Error finding holiday by its context', common_1.HttpStatus.BAD_REQUEST);
+        return result;
     }
 };
 __decorate([
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.Get)("/:id"),
-    (0, common_1.SerializeOptions)({
-        strategy: 'excludeAll'
-    }),
-    __param(0, (0, common_1.Param)("id")),
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [holiday_dto_1.HolidayDto]),
     __metadata("design:returntype", Promise)
-], HolidayController.prototype, "getHolidayById", null);
+], HolidayController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.SerializeOptions)({
-        strategy: 'excludeAll'
-    }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], HolidayController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Post)(),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [holiday_dto_1.HolidayDto]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], HolidayController.prototype, "createHoliday", null);
+], HolidayController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Put)("/:id"),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    __param(0, (0, common_1.Param)("id")),
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, holiday_dto_1.HolidayDto]),
     __metadata("design:returntype", Promise)
-], HolidayController.prototype, "updateHoliday", null);
+], HolidayController.prototype, "update", null);
 __decorate([
-    (0, common_1.Post)("/search"),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.SerializeOptions)({
-        strategy: 'excludeAll'
-    }),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [holiday_search_dto_1.HolidaySearchDto]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], HolidayController.prototype, "searchHoliday", null);
+], HolidayController.prototype, "delete", null);
 __decorate([
-    (0, common_1.Get)("/findByYear/:year"),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.SerializeOptions)({
-        strategy: 'excludeAll'
-    }),
+    (0, common_1.Get)('/findByYear/:year'),
     __param(0, (0, common_1.Param)('year')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], HolidayController.prototype, "findHolidayByYear", null);
+], HolidayController.prototype, "findByYear", null);
 __decorate([
-    (0, common_1.Get)("/findByContext/:context"),
-    (0, common_1.UseInterceptors)(common_1.ClassSerializerInterceptor),
-    (0, common_1.SerializeOptions)({
-        strategy: 'excludeAll'
-    }),
+    (0, common_1.Get)('/findByContext/:context'),
     __param(0, (0, common_1.Param)('context')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], HolidayController.prototype, "findHolidayByContext", null);
+], HolidayController.prototype, "findByContext", null);
 HolidayController = __decorate([
     (0, common_1.Controller)("holiday"),
     __metadata("design:paramtypes", [holiday_service_1.HolidayService])
