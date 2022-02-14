@@ -11,7 +11,7 @@ services:
       - /usr/src/app/node_modules
     ports:
       - ${PORT}:${PORT}
-    command: npm run start:dev && npm run typeorm:migration:generate myinit && npm run typeorm:migration:run
+    command: npm run start:dev
     env_file:
       - .env
     networks:
