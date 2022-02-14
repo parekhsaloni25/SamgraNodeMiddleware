@@ -4,10 +4,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class StudentDto {
 
-  @ApiProperty({
-    type: String,
-    description: 'The osid of the student'
-  })
   @Exclude()
   osid : string
 
@@ -40,17 +36,9 @@ export class StudentDto {
   @Expose()
   lastName: string;
 
-  @ApiProperty({
-    type: String,
-    description: 'The contact number of the student'
-  })
   @IsNumber()
   contactNumber: string;
 
-  @ApiProperty({
-    type: String,
-    description: 'The email of the student'
-  })
   @IsEmail()
   email: string;
 

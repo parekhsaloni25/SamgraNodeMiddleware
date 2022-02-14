@@ -1,13 +1,18 @@
 import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import {ApiTags, ApiOkResponse, ApiForbiddenResponse, ApiCreatedResponse, ApiBody} from "@nestjs/swagger";
 import { TopicDto } from './dto/topic.dto';
 import { TopicService } from './topic.service';
 
+@ApiTags('Topic')
 @Controller('topic')
 export class TopicController {
 
     constructor(private readonly topicService: TopicService) {}
 
     @Post()
+    @ApiCreatedResponse({ description: "Topic has been created successfully."})
+    @ApiBody({ type: TopicDto })
+    @ApiForbiddenResponse({ description: 'Forbidden' })
     async create(@Body() createTopicDto: TopicDto) {
         const result = await this.topicService.createTopic(createTopicDto);
         if (!result)
@@ -16,6 +21,8 @@ export class TopicController {
     }
 
     @Get()
+    @ApiOkResponse({ description: "Topic list."})
+    @ApiForbiddenResponse({ description: 'Forbidden' })
     async get() {
         const result = await this.topicService.getTopic();
         if (!result)
@@ -24,6 +31,8 @@ export class TopicController {
     }
 
     @Get(':id')
+    @ApiOkResponse({ description: "Topic detail."})
+    @ApiForbiddenResponse({ description: 'Forbidden' })
     async findOne(@Param('id') id: string) {
         const result = await this.topicService.findTopicById(id);
         if (!result)
@@ -32,6 +41,8 @@ export class TopicController {
     }
     
     @Put(':id')
+    @ApiOkResponse({ description: "Topic has been updated successfully."})
+    @ApiForbiddenResponse({ description: 'Forbidden' })
     async update(@Param('id') id: string, @Body() updateTopicDto: TopicDto) {
         const result = await this.topicService.updateTopic(id, updateTopicDto);
         if (!result)
@@ -40,6 +51,8 @@ export class TopicController {
     }
     
     @Delete(':id')
+    @ApiOkResponse({ description: "Topic deleted successfully."})
+    @ApiForbiddenResponse({ description: 'Forbidden' })
     async delete(@Param('id') id: string) {
         const result = await this.topicService.deleteTopic(id);
         if (!result)
